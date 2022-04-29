@@ -1,0 +1,15 @@
+private String 예보시간;
+private String 테마;
+private String 코스ID;
+private String 지역아이디;
+private String 지역이름;
+private String 코스명;
+private String 관광지역아이디;
+private String 관광지역이름;
+private String 관광지명;
+private String 기온;
+private String 풍향;
+private String 풍속;
+private String 날씨;
+private String 습도;
+private String 강수확률;

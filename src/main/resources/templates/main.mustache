@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="display: flex;">
+        <select id="select-id" style="width: 100px; margin-right: 10px">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+        <button id="btn-search">버튼</button>
+    </div>
+    <div id="set-box"></div>
+</body>
+
+<script>
+    $("#btn-search").click(() => {
+        download();
+    });
+
+    async function download() {
+        let id = $("#select-id").val();
+        console.log(id);
+        let response = await fetch(`/api/down/${id}`);
+        let responseParse = await response.json();
+        if (response.status === 200) {
+            let set = responseParse.response.body.items.item;
+
+            for (let i in set) {
+                $("#set-box").append(renderBox(set[i]));
+            }
+        }
+    }
+
+    function renderBox(set) {
+        switch (set.sky) {
+            case 1:
+                set.sky = "맑음";
+                break;
+            case 2:
+                set.sky = "구름";
+                break;
+            case 3:
+                set.sky = "흐림";
+                break;
+            case 4:
+                set.sky = "비";
+                break;
+            case 5:
+                set.sky = "소나기";
+                break;
+            case 6:
+                set.sky = "비눈";
+                break;
+            case 7:
+                set.sky = "눈비";
+                break;
+            case 8:
+                set.sky = "눈";
+                break;
+
+        }
+        return `
+        <h3>코스명 : ${set.courseName}</h3>
+            <ul>
+                <li>지역 : ${set.courseAreaName} ${set.spotAreaName}</li>
+                <li>관광지명 : ${set.spotName}</li>
+                <li>예보시간 : ${set.tm}</li>
+                <li>하늘상태 : ${set.sky}</li>
+                <li>강수량 : ${set.rn}</li>
+            </ul>
+        `;
+    }
+</script>
+
+</html>
